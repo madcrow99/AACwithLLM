@@ -94,7 +94,7 @@ namespace AACwithLLM
 
         private async void Connect()
         {
-            string serverUrl = "ws://192.168.86.47:5000";
+            string serverUrl = "your socket address ";
             try
             {
                 await WebSocketClient.ConnectAsync(serverUrl);
