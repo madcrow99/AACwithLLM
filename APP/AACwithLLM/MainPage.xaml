@@ -1,0 +1,170 @@
+﻿<Page
+    x:Class="AACwithLLM.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AACwithLLM"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:g="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="textBox" InputScope="Text" Grid.Column="0" TextChanged="TextBox_TextChanged" KeyDown="TextBox_KeyDown"/>
+            <Button x:Name="buttonSpeak" Content="Speak" Click="ButtonSpeak_Click" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4"/>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="GenerateSentenceButton" Content="Generate Sentence" Click="Generate_Click" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+               
+            <Button x:Name="button2" Content="" Click="Button_Click" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+                
+            <Button x:Name="button3" Content="" Click="Button_Click" Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+                
+            <Button x:Name="button4" Content="" Click="Button_Click" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+            <Button x:Name="MADbutton" Content="Please wait" Click="Button_Click" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+               
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="GenerateFromKeywordsButton" Content="Generate from keywords" Click="Generate_Click" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+                
+            <Button x:Name="button5" Content="" Click="Button_Click" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+                
+
+            <Button x:Name="button6" Content="" Click="Button_Click" Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+                
+            <Button x:Name="button7" Content="" Click="Button_Click" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+                
+
+            <Button x:Name="thanksButton" Content="thanks" Click="Button_Click" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+               
+
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="button8" Content="" Click="Button_Click" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+                
+            <Button x:Name="button9" Content="" Click="Button_Click" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+                
+
+            <Button x:Name="button10" Content="" Click="Button_Click" Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+            <Button x:Name="button11" Content="" Click="Button_Click" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+            <Button x:Name="button12" Content="" Click="Button_Click" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+        </Grid>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="button13" Content="" Click="Button_Click" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+              
+            <Button x:Name="button14" Content="" Click="Button_Click" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+
+            <Button x:Name="button15" Content="" Click="Button_Click" Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+            <Button x:Name="button16" Content="" Click="Button_Click" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+            <Button x:Name="button17" Content="" Click="Button_Click" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+        </Grid>
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="button18" Content="" Click="Button_Click" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+                
+            <Button x:Name="button19" Content="" Click="Button_Click" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+                
+
+            <Button x:Name="button20" Content="" Click="Button_Click" Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+                
+
+            <Button x:Name="button21" Content="" Click="Button_Click" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+               
+
+            <Button x:Name="button22" Content="" Click="Button_Click" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+                
+        </Grid>
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="button23" Content="" Click="Button_Click" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+               
+            
+            <Button x:Name="button24" Content="" Click="Button_Click" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+
+            <Button x:Name="button25" Content="" Click="Button_Click" Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+               
+            <Button x:Name="button26" Content="" Click="Button_Click" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+                
+            <Button x:Name="button27" Content="" Click="Button_Click" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  g:GazeInput.Interaction="Enabled" g:GazeInput.MaxDwellRepeatCount="0" Margin="5" Background="Transparent" BorderBrush="Black" BorderThickness="4" g:GazeInput.DwellDuration="00:00:01.000"/>
+
+        </Grid>
+
+
+
+        <MediaElement x:Name="mediaElement" Grid.Row="9" />
+    </Grid>
+</Page>
