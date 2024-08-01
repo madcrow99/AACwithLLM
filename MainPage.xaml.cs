@@ -77,12 +77,120 @@ namespace AACwithLLM
                 SpeechSynthesisStream synthesisStream = await synthesizer.SynthesizeTextToStreamAsync(text);
                 mediaElement.SetSource(synthesisStream, synthesisStream.ContentType);
                 mediaElement.Play();
-                //SendMessage("1" + text); //1 is for messages that are sent to elevenlabs
                 textBox.Text = "";
                 Button button = (Button)FindName("button2");
                 button.Content = text;
+
+                // Send save command to Python server
+                SendMessage($"save|{text}");
             }
         }
+
+        private async void Generate_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            string buttonText = button.Content.ToString();
+            string text = textBox.Text;
+            string message = text.Trim();
+            string promptType = "";
+
+            if (button.Name == "GenerateSentenceButton")
+            {
+                promptType = "generate_sentence";
+            }
+            else if (button.Name == "GenerateFromKeywordsButton")
+            {
+                promptType = "generate_from_keywords";
+            }
+
+            if (!string.IsNullOrWhiteSpace(promptType))
+            {
+                ClearButtons(); // Clear button contents
+                SendMessage($"{message}|{promptType}");
+            }
+
+            textBox.Focus(FocusState.Programmatic);
+            textBox.Select(textBox.Text.Length, 0);
+        }
+
+        private void ClearButtons()
+        {
+            Button[] buttons = { button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, button14, button15, button16 };
+            foreach (var button in buttons)
+            {
+                button.Content = "";
+            }
+        }
+
+        private async void HandleMessage(string message)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                UpdateButtons(message);
+            });
+        }
+
+        private void UpdateButtons(string responseData)
+        {
+            Button[] buttons = { button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, button14, button15, button16 };
+
+            // Clear all button contents first
+            foreach (var button in buttons)
+            {
+                button.Content = "";
+            }
+
+            // Determine the type of response based on the presence of certain keywords
+            if (responseData.StartsWith("Retrieved sentences:"))
+            {
+                var retrievedSentences = responseData.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries).Skip(1);
+                int i = 0;
+                foreach (var sentence in retrievedSentences)
+                {
+                    if (i < buttons.Length)
+                    {
+                        buttons[i].Content = sentence;
+                        i++;
+                    }
+                }
+            }
+            else
+            {
+                // For generate sentence from keywords
+                // Split responseData by ": " and take the last part, assuming it is the final generated sentence.
+                var responseLines = responseData.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
+                if (responseLines.Length > 1)
+                {
+                    var finalSentence = responseLines[responseLines.Length - 1].Trim();
+                    if (!string.IsNullOrWhiteSpace(finalSentence))
+                    {
+                        button2.Content = finalSentence; // Assuming you display the final sentence in the first button.
+                    }
+                }
+            }
+        }
+
+
+        private string previousText = "   ";
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                string currentText = textBox.Text;
+
+                if (currentText.Length >= 3 && (
+                        currentText.Substring(0, 3) != previousText.Substring(0, 3) ||
+                        Math.Abs(currentText.Length - previousText.Length) > 3)
+                   )
+                {
+                    SendMessage($"{currentText}|default");
+                    previousText = currentText;
+                }
+            }
+        }
+
         private void TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
@@ -94,7 +202,7 @@ namespace AACwithLLM
 
         private async void Connect()
         {
-            string serverUrl = "your socket address ";
+            string serverUrl = "ws://localhost:8765";
             try
             {
                 await WebSocketClient.ConnectAsync(serverUrl);
@@ -108,7 +216,6 @@ namespace AACwithLLM
 
         private async void SendMessage(string message)
         {
-
             try
             {
                 await WebSocketClient.SendMessageAsync(message);
@@ -121,48 +228,7 @@ namespace AACwithLLM
         }
 
 
-        private async void HandleMessage(string message)
-        {
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                UpdateButtons(message);
-            });
-        }
 
-
-        private void UpdateButtons(string responseData)
-        {
-            var outputs = responseData.Split('\n');
-            Button[] buttons = { button2, button3, button4, button5, button6 };
-
-            for (int i = 0; i < outputs.Length && i < buttons.Length; i++)
-            {
-                if (!string.IsNullOrWhiteSpace(outputs[i]))
-                {
-                    buttons[i].Content = outputs[i];
-                }
-            }
-        }
-        private string previousText = "   "; // Store previously sent text
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (textBox != null)
-            {
-                string currentText = textBox.Text;
-
-                // Check if more than 3 characters have changed or it's the first 3
-                if (currentText.Length >= 3 && (
-                        currentText.Substring(0, 3) != previousText.Substring(0, 3) ||
-                        Math.Abs(currentText.Length - previousText.Length) > 3)
-                   )
-                {
-                    SendMessage(currentText);
-                    previousText = currentText;
-                }
-            }
-        }
 
         protected override async void OnNavigatedFrom(NavigationEventArgs e)
         {
