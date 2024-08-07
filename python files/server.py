@@ -13,7 +13,7 @@ from sentence_transformers import SentenceTransformer
 import faiss
 import pickle
 from collections import Counter
-
+import csv
 import qlinear
 from utils import Utils
 from model_utils import (
@@ -143,7 +143,7 @@ async def handle_connection(websocket, path):
         else:
             user_input = message
             prompt_type = "default"
-
+        print(f"{prompt_type}")
         if prompt_type == "generate_sentence":
             retrieved_sentences = retriever.retrieve(user_input, top_k=10)
             context = "Based on the incomplete sentence and the following similar sentences, complete the sentence.\n\n"
@@ -177,10 +177,13 @@ async def handle_connection(websocket, path):
             await websocket.send(final_response)
 
         elif prompt_type == "save":
-            with open("new_sentences.csv", 'a', newline='') as csvfile:
-                writer = csv.writer(csvfile)
-                writer.writerow([user_input])
-            print(f"Saved sentence: {user_input}")
+
+            try:
+                with open('new_sentences.csv', 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow([user_input])
+            except Exception as e:
+                print(f"An error occurred: {e}")
 
         else:
             retrieved_sentences = retriever.retrieve(user_input, top_k=10)
