@@ -14,6 +14,7 @@ import faiss
 import pickle
 from collections import Counter
 import csv
+import re
 import qlinear
 from utils import Utils
 from model_utils import (
@@ -94,8 +95,23 @@ class SentenceRetriever:
         if os.path.exists(file_path):
             df = pd.read_csv(file_path, header=None)
             sentences = df[0].tolist()
-            return sentences
+
+            # Apply text preprocessing
+            processed_sentences = [self.preprocess_text(sentence) for sentence in sentences]
+            return processed_sentences
         return []
+
+    @staticmethod
+    def preprocess_text(text):
+        # Strip leading and trailing whitespace
+        text = text.strip()
+        # Replace multiple whitespaces with a single whitespace
+        text = re.sub(r'\s+', ' ', text)
+        # Convert to lowercase
+        text = text.lower()
+        # Remove special characters except apostrophes
+        text = re.sub(r"[^a-z0-9\s']", '', text)
+        return text
 
     def extract_sentences(self):
         all_sentences = []
