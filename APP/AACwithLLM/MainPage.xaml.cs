@@ -20,6 +20,7 @@ using Windows.Media.SpeechSynthesis;
 using AACwithLLM;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using System.Text.RegularExpressions;
+using System.ServiceModel.Channels;
 
 namespace AACwithLLM
 {
@@ -71,6 +72,8 @@ namespace AACwithLLM
         private async void ButtonSpeak_Click(object sender, RoutedEventArgs e)
         {
             string text = textBox.Text;
+            text = text.Trim();
+            string promptType = "";
             if (text.Length > 0)
             {
                 SpeechSynthesizer synthesizer = new SpeechSynthesizer();
@@ -82,7 +85,9 @@ namespace AACwithLLM
                 button.Content = text;
 
                 // Send save command to Python server to update csv
-                SendMessage($"save|{text}");
+                promptType = "save";
+                SendMessage($"{text}|{promptType}");
+                
             }
         }
 
