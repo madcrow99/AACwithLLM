@@ -177,16 +177,15 @@ async def handle_connection(websocket, path):
 
         elif prompt_type == "generate_from_keywords":
             context = (
-                "You are a helpful assistant that helps provide recommendations for completing sentences based on keywords.\n\n"
-                "Example 1: Keywords: How day Lisa\n"
+                "You are a helpful assistant that provides a single recommendation for completing sentences based on keywords.\n\n"
+                "Example: Keywords: How day Lisa\n"
                 "Response: How is your day, Lisa?\n"
-                "Example 2: Keywords: Where dinner tonight\n"
-                "Response: Where should we go for dinner tonight?\n\n"
-                f"Keywords: {user_input}\n"
+                f"Provide a response for these Keywords: {user_input}\n"
                 "Response:")
             inputs = tokenizer(context, return_tensors="pt")
             outputs = model.generate(inputs.input_ids, max_new_tokens=50)
             response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+            print(response)
             response_lines = response.split('\n')
             final_response = response_lines[-1].strip()
             print(f"Response: {final_response}")
