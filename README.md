@@ -55,8 +55,9 @@ Using the Application:
    - Sentences are saved to a file named `new_sentences.csv` each time the "Speak" button is pressed.
    - If the `new_sentences.csv` file already exists, it will be overwritten with the latest sentences.
 
-By integrating the advanced capabilities of the Ryzen AI processor and modern language models, this application represents an advancement in helping individuals communicate more naturally and efficiently.
+By integrating the advanced capabilities of the Ryzen AI processor and modern language models, this application is an example of helping individuals communicate more naturally and efficiently.
 To do:
+
 -Continue to develop interface
--Fine tune LLM
+
 -Incorporate Text-to-Speech model
